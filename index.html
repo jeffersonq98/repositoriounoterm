@@ -1,0 +1,114 @@
+<html lang="es">
+
+<head>
+    <!--<link rel="stylesheet" href="index.css">-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.0-alpha.7/vue.min.js" integrity="sha512-QzGpNkNGgdPDDySXQyEYAYPvNs1yPGCI1NpMZBRf4YQJyqV6RZMXv8WBpxiTH2K/h2bLAq6deNyFGDZfDbVKig==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- componentes
+    <div id="app">
+    <button v-on:click="cambiarvisibilidad">  Mostrar/Ocultar</button>    
+    <ul v-if="mostrar">
+        <li v-for="(show, index) in tvshows" :key="index">
+            <strong>{{ show.name }}</strong> ({{show.season}} Temporadas)
+        </li>
+
+    </ul>
+    </div>
+    <div v-else>
+        No datos
+    </div>
+
+    <script>
+        const app = new Vue({
+            el:'#app',
+            data:{
+                mostrar:true,
+                tvshows:[
+                    {name: 'Game of Thrones', seasons: 7},
+                    {name: 'Breaking Bad', seasons: 5}
+                ]
+            },
+            methods:{
+                cambiarvisibilidad: function (){
+                    this.mostrar = !this.mostrar
+                }
+            }
+        })
+    </script>
+-->
+  <!-- Doble-way data
+    "En el componente los datos son funciones,en la instancia de Vue un objeto"
+
+-->
+    <div id="app">
+
+    </div>
+    
+    <script>
+        Vue.component('todo-add',{
+            template: `
+            <div>
+                <input type="text" v-model="title"/>
+                <button @click="onClick"> Añadir</button>   
+            </div>
+            `,
+            data: function () {
+                return{
+                    title: null
+                }
+            },
+            methods: {
+                onClick: function () {
+                    this.$emit('new',{title: this.title})
+                }
+
+            }
+        })
+        Vue.component('todo-item',{
+            props: ['todo'],
+            template: `<li>{{ todo.title }}</li>`
+        })
+
+        Vue.component('todo-list',{
+            props: ['todos'],
+            template:`
+            <ul>
+                <todo-item
+                v-for="(todo,index) in todos"
+                :key="index"
+                :todo="todo">
+                </todo-item>
+            </ul>
+            `
+        })
+
+        const app   = new Vue({
+            el: '#app',
+            data : {
+                todos:[
+                   {title: 'Tarea 1',completed: false},
+                   {title: 'Tarea 2',completed: false},
+                   {title: 'Tarea 3',completed: false}
+                ]
+                },
+                template:`
+                <div>
+                    <todo-list :todos="todos"></todo-list>
+                    <todo-add @new="addNewTodo"></todo-add>
+                </div>
+                `,
+                methods: {
+                    addNewTodo: function(todo) {
+                        this.todos.push(todo)
+                    }
+                }
+        })
+    </script>
+
+    
+</body>
+
+</html>
